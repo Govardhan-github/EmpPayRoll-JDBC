@@ -1,0 +1,2 @@
+Tconnecting to database : jdbc:mysql://localhost:3306/payroll_service?userSSL=false
+UConnection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@220ccfbc
