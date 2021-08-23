@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelabz.EmployeePayrollDBServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2021-08-23T11:29:02" hostname="DESKTOP-TK8JRTA" time="3.068">
+<testsuite name="com.bridgelabz.EmployeePayrollDBServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2021-08-23T11:52:15" hostname="DESKTOP-TK8JRTA" time="4.028">
   <properties/>
-  <testcase name="givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB()" classname="com.bridgelabz.EmployeePayrollDBServiceTest" time="3.068">
+  <testcase name="givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB()" classname="com.bridgelabz.EmployeePayrollDBServiceTest" time="4.028">
     <failure message="java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
 	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
 	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
 	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:266)
 	at java.base/java.util.Objects.checkIndex(Objects.java:359)
 	at java.base/java.util.ArrayList.get(ArrayList.java:427)
-	at com.bridgelabz.EmployeePayrollService.checkEmployeePayrollInSyncWithDB(EmployeePayrollService.java:29)
-	at com.bridgelabz.EmployeePayrollDBServiceTest.givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB(EmployeePayrollDBServiceTest.java:22)
+	at com.bridgelabz.EmployeePayrollService.checkEmployeePayrollInSyncWithDB(EmployeePayrollService.java:31)
+	at com.bridgelabz.EmployeePayrollDBServiceTest.givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB(EmployeePayrollDBServiceTest.java:24)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -107,7 +107,7 @@ Connection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@5bae4
 connecting to database : jdbc:mysql://localhost:3306/payroll_service?userSSL=false
 Connection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@208dec8b
 connecting to database : jdbc:mysql://localhost:3306/payroll_service?userSSL=false
-Connection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@89ee878
+Connection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@1f78f69f
 ]]></system-out>
   <system-err><![CDATA[java.sql.SQLException: Column 'salary' not found.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
@@ -116,10 +116,10 @@ Connection to the Database Successfully! :com.mysql.cj.jdbc.ConnectionImpl@89ee8
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
 	at com.mysql.cj.jdbc.result.ResultSetImpl.findColumn(ResultSetImpl.java:581)
 	at com.mysql.cj.jdbc.result.ResultSetImpl.getDouble(ResultSetImpl.java:806)
-	at com.bridgelabz.EmpPayRollDBService.getEmployeePayrollData(EmpPayRollDBService.java:69)
-	at com.bridgelabz.EmpPayRollDBService.getEmployeePayrollData(EmpPayRollDBService.java:57)
-	at com.bridgelabz.EmployeePayrollService.checkEmployeePayrollInSyncWithDB(EmployeePayrollService.java:28)
-	at com.bridgelabz.EmployeePayrollDBServiceTest.givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB(EmployeePayrollDBServiceTest.java:22)
+	at com.bridgelabz.EmpPayRollDBService.getEmployeePayrollData(EmpPayRollDBService.java:74)
+	at com.bridgelabz.EmpPayRollDBService.getEmployeePayrollData(EmpPayRollDBService.java:62)
+	at com.bridgelabz.EmployeePayrollService.checkEmployeePayrollInSyncWithDB(EmployeePayrollService.java:30)
+	at com.bridgelabz.EmployeePayrollDBServiceTest.givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB(EmployeePayrollDBServiceTest.java:24)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
