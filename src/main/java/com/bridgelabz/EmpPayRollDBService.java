@@ -5,7 +5,10 @@ Importing Java Packages
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 public class EmpPayRollDBService {
     private PreparedStatement employeePayrollDataStatement;
     /*
@@ -115,5 +118,24 @@ public class EmpPayRollDBService {
             e.printStackTrace();
         }
         return employeePayrollList;
+    }
+    /*
+    Declaring Get Average Salary By Gender Method From Database
+     */
+    public Map<String, Double> getAverageSalaryByGender() {
+        String sql= "SELECT gender,AVG(salary) as avg_salary from emp_payroll group by gender;";
+        Map<String,Double> genderToAvgSalaryMap=new HashMap<>();
+        try(Connection connection=this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+                String gender = result.getString("gender");
+                double salary = result.getDouble("avg_salary");
+                genderToAvgSalaryMap.put(gender,salary);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    return genderToAvgSalaryMap;
     }
 }

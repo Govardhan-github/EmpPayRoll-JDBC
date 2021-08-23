@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 public class EmployeePayrollDBServiceTest {
     /*
     Test Method To Given Employee PayRoll DB Retrieved Should Match The Count
@@ -35,5 +37,17 @@ public class EmployeePayrollDBServiceTest {
         LocalDate endDate = LocalDate.now();
         List<EmployeePayrollData> EmployeePayrollData =employeePayrollService.readEmployeePayrollForDateRange(sDate,endDate);
         Assertions.assertEquals(3,EmployeePayrollData.size());
+    }
+    /*
+    Test Method To Get The Average Salary Of Employees By Group Of Gender
+     */
+    @Test
+    public void givenPayRollData_WhenAverageSalaryRetriveByGender_ShouldReturnProperValue(){
+        EmpPayRollDBService empPayRollDBService=new EmpPayRollDBService();
+        EmployeePayrollService employeePayrollService= new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollDataList = empPayRollDBService.readData();
+        Map<String,Double> averageSalaryByGender=employeePayrollService.readAvgSalaryByGender();
+        Assertions.assertTrue(averageSalaryByGender.get("M").equals(2000000.0)&&
+                                averageSalaryByGender.get("F").equals(3500000.0));
     }
 }

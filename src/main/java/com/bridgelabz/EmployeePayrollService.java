@@ -5,6 +5,8 @@ Importing Java Packages
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 /*
 Declaring Employee Pay Roll Service Class
  */
@@ -56,5 +58,11 @@ public class EmployeePayrollService {
      */
     public List<EmployeePayrollData>  readEmployeePayrollForDateRange(LocalDate sDate, LocalDate endDate) {
         return empPayRollDBService.getEmployeePayrollForDateRange(sDate,endDate);
+    }
+    /*
+    Declaring Method To Read Average Salary Of Employee By Gender
+     */
+    public Map<String, Double> readAvgSalaryByGender() {
+        return empPayRollDBService.getAverageSalaryByGender();
     }
 }
