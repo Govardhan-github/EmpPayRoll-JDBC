@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.List;
 
 public class EmpPayRollDBService {
+    private PreparedStatement employeePayrollDataStatement;
+
     /*
     Declaring Main Method Here
     For Getting The Connection Of DataBase
@@ -24,6 +26,9 @@ public class EmpPayRollDBService {
         System.out.println("Connection to the Database Successfully! :" + connection);
         return connection;
     }
+    /*
+    Declaring Read Method To Read The Data From The Database
+     */
     public List<EmployeePayrollData> readData() {
         String sql = "SELECT * FROM emp_payroll";
         List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
@@ -42,5 +47,65 @@ public class EmpPayRollDBService {
             e.printStackTrace();
         }
         return employeePayrollList;
+    }
+    /*
+    Declaring Get Employee Data Method After Executing query From The Databae
+     */
+    public List<EmployeePayrollData> getEmployeePayrollData(String name) {
+        List<EmployeePayrollData> employeePayrollList = null;
+        if (this.employeePayrollDataStatement == null)
+            this.prepareStatementForEmployeeData();
+        try {
+            employeePayrollDataStatement.setString(1, name);
+            ResultSet result;
+            result = employeePayrollDataStatement.executeQuery();
+            employeePayrollList = this.getEmployeePayrollData(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeePayrollList;
+    }
+    private List<EmployeePayrollData> getEmployeePayrollData(ResultSet result) {
+        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+        try {
+            while (result.next()) {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                double salary = result.getDouble("salary");
+                LocalDate startDate = result.getDate("start").toLocalDate();
+                employeePayrollList.add(new EmployeePayrollData(id,name,salary,startDate));
+            }
+     } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeePayrollList;
+    }
+    /*
+    Method To Prepared Statement For Employee Data for Queries
+     */
+    private void prepareStatementForEmployeeData()  {
+        try {
+            Connection connection = this.getConnection();
+            String sql = "SELECT * FROM payroll_service WHERE name = ?";
+            employeePayrollDataStatement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public int updateEmployeeData(String name, double salary) {
+        return this.updateEmployeeDataUsingStatement(name,salary);
+    }
+    /*
+    Declaring Update Employee Method To Update The Details Of Employee From Database
+     */
+    private int updateEmployeeDataUsingStatement(String name, double salary) {
+        String sql = String.format("update emp_payroll set salary = %.2f where name = '%s';", salary, name);
+        try (Connection connection = this.getConnection()) {
+           Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+      return 0;
     }
 }
