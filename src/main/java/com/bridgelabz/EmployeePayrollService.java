@@ -2,6 +2,7 @@ package com.bridgelabz;
 /*
 Importing Java Packages
  */
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -30,7 +31,6 @@ public class EmployeePayrollService {
         List<EmployeePayrollData> employeePayrollList = empPayRollDBService.getEmployeePayrollData(name);
         return employeePayrollList.get(0).equals(getEmployeePayrollData(name));
     }
-
     /*
     Declaring Update Employee Method To Update The Salary
      */
@@ -50,5 +50,11 @@ public class EmployeePayrollService {
                 .filter(employeePayrollData -> employeePayrollData.name.equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+    /*
+    Declaring Method To Get The Data Of Employee PayRoll For Particular Date Range
+     */
+    public List<EmployeePayrollData>  readEmployeePayrollForDateRange(LocalDate sDate, LocalDate endDate) {
+        return empPayRollDBService.getEmployeePayrollForDateRange(sDate,endDate);
     }
 }

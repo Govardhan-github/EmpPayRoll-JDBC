@@ -1,17 +1,13 @@
 package com.bridgelabz;
-import com.mysql.jdbc.Driver;
 /*
 Importing Java Packages
  */
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-
 public class EmpPayRollDBService {
     private PreparedStatement employeePayrollDataStatement;
-
     /*
     Declaring Main Method Here
     For Getting The Connection Of DataBase
@@ -31,25 +27,10 @@ public class EmpPayRollDBService {
      */
     public List<EmployeePayrollData> readData() {
         String sql = "SELECT * FROM emp_payroll";
-        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-        try {
-            Connection connection=this.getConnection();
-            Statement statement= connection.createStatement();
-            ResultSet result=statement.executeQuery(sql);
-            while (result.next()){
-                int id = result.getInt("id");
-                String name = result.getString("name");
-                double salary = result.getDouble("salary");
-                LocalDate startDate = result.getDate("start").toLocalDate();
-                employeePayrollList.add(new EmployeePayrollData(id,name,salary,startDate));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return employeePayrollList;
+        return this.getEmployeePayrollDataUsingDB(sql);
     }
     /*
-    Declaring Get Employee Data Method After Executing query From The Databae
+    Declaring Get Employee Data Method After Executing query From The Database
      */
     public List<EmployeePayrollData> getEmployeePayrollData(String name) {
         List<EmployeePayrollData> employeePayrollList = null;
@@ -73,9 +54,9 @@ public class EmpPayRollDBService {
                 String name = result.getString("name");
                 double salary = result.getDouble("salary");
                 LocalDate startDate = result.getDate("start").toLocalDate();
-                employeePayrollList.add(new EmployeePayrollData(id,name,salary,startDate));
+                employeePayrollList.add(new EmployeePayrollData(id, name, salary, startDate));
             }
-     } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return employeePayrollList;
@@ -83,7 +64,7 @@ public class EmpPayRollDBService {
     /*
     Method To Prepared Statement For Employee Data for Queries
      */
-    private void prepareStatementForEmployeeData()  {
+    private void prepareStatementForEmployeeData() {
         try {
             Connection connection = this.getConnection();
             String sql = "SELECT * FROM payroll_service WHERE name = ?";
@@ -93,7 +74,7 @@ public class EmpPayRollDBService {
         }
     }
     public int updateEmployeeData(String name, double salary) {
-        return this.updateEmployeeDataUsingStatement(name,salary);
+        return this.updateEmployeeDataUsingStatement(name, salary);
     }
     /*
     Declaring Update Employee Method To Update The Details Of Employee From Database
@@ -101,11 +82,38 @@ public class EmpPayRollDBService {
     private int updateEmployeeDataUsingStatement(String name, double salary) {
         String sql = String.format("update emp_payroll set salary = %.2f where name = '%s';", salary, name);
         try (Connection connection = this.getConnection()) {
-           Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             return statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-      return 0;
+        return 0;
+    }
+    /*
+    Declaring get Employee Payroll For Date Range Method
+    For Retrieving The Data Of Employee For Particular Date Range
+     */
+    public List<EmployeePayrollData> getEmployeePayrollForDateRange(LocalDate sDate, LocalDate endDate) {
+        String sql = String.format("SELECT * FROM emp_payroll WHERE START BETWEEN '%s' AND '%s';",
+                Date.valueOf(sDate), Date.valueOf(endDate));
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+    private List<EmployeePayrollData> getEmployeePayrollDataUsingDB(String sql) {
+        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                double salary = result.getDouble("salary");
+                LocalDate startDate = result.getDate("start").toLocalDate();
+                employeePayrollList.add(new EmployeePayrollData(id, name, salary, startDate));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeePayrollList;
     }
 }
